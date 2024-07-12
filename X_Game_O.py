@@ -36,7 +36,12 @@ class Game:
         pass
 
     def start_game(self, Player_Winner1=False, Player_Winner2=False):
-
+        if isinstance(self.first_player,TimurPlayer_Usual) or isinstance(self.second_player, IlyaPlayer_Usual):
+            if isinstance(self.second_player, IlyaPlayer_Usual) or isinstance(self.first_player,TimurPlayer_Usual):
+                print("Каждое поле в Крестики-Нолики соотвествует цифре:"'\n'
+                  "                [1]   [2]   [3]"'\n'
+                  "                [4]   [5]   [6]"'\n'
+                  "                [7]   [8]   [9]")
         random_move_player = randint(0, 1)
         count = -1
         while True:
@@ -49,18 +54,22 @@ class Game:
                 break
             if random_move_player == 1:
                 print("Ход - Х")
-                self.first_player.turn(self.matrix, int(input("Введите позицию вставки:")))
+                self.first_player.turn(self.matrix, 'X')
                 Player_Winner1 = self.chek_is_winner('X')
                 random_move_player -= 1
-                print(f'Недостуные поля для хода: {self.not_enter_matrix}')
+                if isinstance(self.first_player, TimurPlayer_Usual) or isinstance(self.second_player, IlyaPlayer_Usual):
+                    if isinstance(self.second_player, IlyaPlayer_Usual) or isinstance(self.first_player,TimurPlayer_Usual):
+                        print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 print(self.matrix)
                 print()
             else:
                 print("Ход - О")
-                self.second_player.turn(self.matrix, int(input("Введите позицию вставки:")))
+                self.second_player.turn(self.matrix, 'O')
                 Player_Winner2 = self.chek_is_winner('O')
                 random_move_player += 1
-                print(f'Недостуные поля для хода: {self.not_enter_matrix}')
+                if isinstance(self.first_player, TimurPlayer_Usual) or isinstance(self.second_player, IlyaPlayer_Usual):
+                    if isinstance(self.second_player, IlyaPlayer_Usual) or isinstance(self.first_player,TimurPlayer_Usual):
+                        print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 print(self.matrix)
                 print()
 
@@ -78,57 +87,66 @@ class Player:
 
 class TimurPlayer_Usual(Player):
     def turn(self, matrix, value):
-        if value < 10:
-            Game.not_enter_matrix.append(value)
+        value_x = int(input("Введите позицию вставки:"))
+        if value_x < 10:
+            Game.not_enter_matrix.append(value_x)
+        else:
+            print("Такого поля нету...")
+            self.turn(matrix, value)
         obj_matrix = matrix[0]
         obj_matrix2 = matrix[1]
         obj_matrix3 = matrix[2]
 
-        if value == 1:
-            obj_matrix[0] = 'X'
-        if value == 2:
-            obj_matrix[1] = 'X'
-        if value == 3:
-            obj_matrix[2] = 'X'
-        if value == 4:
-            obj_matrix2[0] = 'X'
-        if value == 5:
-            obj_matrix2[1] = 'X'
-        if value == 6:
-            obj_matrix2[2] = 'X'
-        if value == 7:
-            obj_matrix3[0] = 'X'
-        if value == 8:
-            obj_matrix3[1] = 'X'
-        if value == 9:
-            obj_matrix3[2] = 'X'
+        if value_x == 1:
+            obj_matrix[0] = value
+        if value_x == 2:
+            obj_matrix[1] = value
+        if value_x == 3:
+            obj_matrix[2] = value
+        if value_x == 4:
+            obj_matrix2[0] = value
+        if value_x == 5:
+            obj_matrix2[1] = value
+        if value_x == 6:
+            obj_matrix2[2] = value
+        if value_x == 7:
+            obj_matrix3[0] = value
+        if value_x == 8:
+            obj_matrix3[1] = value
+        if value_x == 9:
+            obj_matrix3[2] = value
 
 class IlyaPlayer_Usual(Player):
     def turn(self, matrix, value):
-        if value < 10:
-           Game.not_enter_matrix.append(value)
+        value_o = int(input("Введите позицию вставки:"))
+        if value_o < 10:
+           Game.not_enter_matrix.append(value_o)
+        else:
+            print("Такого поля нету...")
+           # value_o = int(input("Введите позицию вставки:"))
+            self.turn(matrix, value)
         obj_matrix = matrix[0]
         obj_matrix2 = matrix[1]
         obj_matrix3 = matrix[2]
 
-        if value == 1:
-            obj_matrix[0] = 'O'
-        if value == 2:
-            obj_matrix[1] = 'O'
-        if value == 3:
-            obj_matrix[2] = 'O'
-        if value == 4:
-            obj_matrix2[0] = 'O'
-        if value == 5:
-            obj_matrix2[1] = 'O'
-        if value == 6:
-            obj_matrix2[2] = 'O'
-        if value == 7:
-            obj_matrix3[0] = 'O'
-        if value == 8:
-            obj_matrix3[1] = 'O'
-        if value == 9:
-            obj_matrix3[2] = 'O'
+        if value_o == 1:
+            obj_matrix[0] = value
+        if value_o == 2:
+            obj_matrix[1] = value
+        if value_o == 3:
+            obj_matrix[2] = value
+        if value_o == 4:
+            obj_matrix2[0] = value
+        if value_o == 5:
+            obj_matrix2[1] = value
+        if value_o == 6:
+            obj_matrix2[2] = value
+        if value_o == 7:
+            obj_matrix3[0] = value
+        if value_o == 8:
+            obj_matrix3[1] = value
+        if value_o == 9:
+            obj_matrix3[2] = value
 
 class AutoPlayer1(Player):
    def turn(self, matrix, value):
@@ -156,22 +174,22 @@ class AutoPlayer1(Player):
            return True
 
        elif obj_matrix[0] == value and obj_matrix2[0] == value:
-           obj_matrix3[0] == value
+           obj_matrix3[0] = value
            return True
        elif obj_matrix3[0] == value and obj_matrix2[0] == value:
            obj_matrix[0] == value
            return True
        elif obj_matrix[1] == value and obj_matrix2[1] == value:
-           obj_matrix3[1] == value
+           obj_matrix3[1] = value
            return True
        elif obj_matrix3[1] == value and obj_matrix2[1] == value:
-           obj_matrix[1] == value
+           obj_matrix[1] = value
            return True
        elif obj_matrix[2] == value and obj_matrix2[2] == value:
-           obj_matrix3[2] == value
+           obj_matrix3[2] = value
            return True
        elif obj_matrix3[2] == value and obj_matrix2[2] == value:
-           obj_matrix[2] == value
+           obj_matrix[2] = value
            return True
 
        elif obj_matrix[0] == value and obj_matrix2[1] == value:
@@ -195,7 +213,7 @@ class AutoPlayer1(Player):
                return True
            if obj_matrix[0] != -1:
                obj_matrix[0] = value
-               return Tru
+               return True
            if obj_matrix2[0] != -1:
                obj_matrix2[0] = value
                return True
