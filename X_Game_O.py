@@ -33,7 +33,18 @@ class Game:
         return False
     # В принципе осталось только это, но есть проблемы с auto_player
     def print_info(self):
-        pass
+        for i in range(0, 3):
+            row = self.matrix[i]
+            print("{0} | {1} | {2} |".format(self.convert_symbol(row[0]), self.convert_symbol(row[1]), self.convert_symbol(row[2])))
+            print("__  __  __")
+
+    def convert_symbol(self, value):
+        if value == 1:
+            return "X"
+        elif value == -1:
+            return "O"
+        else:
+            return "-"
 
     def start_game(self, Player_Winner1=False, Player_Winner2=False):
         if isinstance(self.first_player,TimurPlayer_Usual) or isinstance(self.second_player, IlyaPlayer_Usual):
