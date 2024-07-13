@@ -48,7 +48,7 @@ class Game:
             return "-"
 
     def isintanse(self):
-        return isinstance(self.first_player, AutoPlayer) or isinstance(self.second_player, AutoPlayer)
+        return isinstance(self.first_player, HandPlayer) or isinstance(self.second_player, HandPlayer)
 
 
     def start_game(self, player_winner1=False, player_winner2=False):
