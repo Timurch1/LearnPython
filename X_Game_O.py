@@ -37,7 +37,7 @@ class Game:
     def print_info(self):
         for i in range(0, 3):
             row = self.matrix[i]
-            print("{0} | {1} | {2} |".format(convert_symbol(row[0]), convert_symbol(row[1]), convert_symbol(row[2])))
+            print("{0} | {1} | {2} |".format(self.convert_symbol(row[0]), self.convert_symbol(row[1]), self.convert_symbol(row[2])))
 
     def convert_symbol(self, value):
         if value == 1:
