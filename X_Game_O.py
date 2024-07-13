@@ -31,7 +31,7 @@ class Game:
         if not_matrix[2] == value and not_matrix2[1] == value and not_matrix3[0] == value:
             return True
         return False
-    # В принципе осталось только это, но есть проблемы с auto_player
+
     def print_info(self):
         for i in range(0, 3):
             row = self.matrix[i]
