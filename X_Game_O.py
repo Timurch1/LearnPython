@@ -37,7 +37,7 @@ class Game:
     def print_info(self):
         for i in range(0, 3):
             row = self.matrix[i]
-            print("{0} | {1} | {2} |".format(convert_symbol(row[0]), convert_symbol(row[1]), convert_symbol(row[2])))
+            print("{0} | {1} | {2} |".format(self.convert_symbol(row[0]), self.convert_symbol(row[1]), self.convert_symbol(row[2])))
 
     def convert_symbol(self, value):
         if value == 1:
@@ -48,13 +48,12 @@ class Game:
             return "-"
 
     def isintanse(self):
-        if isinstance(self.first_player, TimurPlayerUsual) or isinstance(self.second_player, IlyaPlayerUsual):
-            if isinstance(self.second_player, IlyaPlayerUsual) or isinstance(self.first_player, TimurPlayerUsual):
-                pass
+        return isinstance(self.first_player, AutoPlayer) or isinstance(self.second_player, AutoPlayer)
+
 
     def start_game(self, player_winner1=False, player_winner2=False):
-        self.isintanse()
-        print("Каждое поле в Крестики-Нолики соотвествует цифре:"'\n'
+        if self.isintanse():
+            print("Каждое поле в Крестики-Нолики соотвествует цифре:"'\n'
               "                [1]  [2]  [3]"'\n'
               "                [4]  [5]  [6]"'\n'
               "                [7]  [8]  [9]")
@@ -74,8 +73,8 @@ class Game:
                 self.first_player.turn(self.matrix, 1)
                 player_winner1 = self.chek_is_winner(1)
                 random_move_player -= 1
-                self.isintanse()
-                print(f'Недостуные поля для хода: {self.not_enter_matrix}')
+                if self.isintanse():
+                    print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 self.print_info()
                 print()
 
@@ -84,8 +83,8 @@ class Game:
                 self.second_player.turn(self.matrix, -1)
                 player_winner2 = self.chek_is_winner(-1)
                 random_move_player += 1
-                self.isintanse()
-                print(f'Недостуные поля для хода: {self.not_enter_matrix}')
+                if self.isintanse():
+                   print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 self.print_info()
                 print()
 
@@ -103,12 +102,11 @@ class Player:
         raise NameError('Походу неправильно указали имя в дочернем классе, советую перепроверить.')
 
 
-class TimurPlayerUsual(Player):
+class HandPlayer(Player):
     def turn(self, matrix, value):
-        value_x = int(input("Введите позицию вставки:"))
-        if value_x < 10:
-            Game.not_enter_matrix.append(value_x)
-
+        value_insert = int(input("Введите позицию вставки:"))
+        if value_insert < 10:
+            Game.not_enter_matrix.append(value_insert)
         else:
             print("Такого поля нету...")
             self.turn(matrix, value)
@@ -116,60 +114,32 @@ class TimurPlayerUsual(Player):
         obj_matrix2 = matrix[1]
         obj_matrix3 = matrix[2]
 
-        if value_x == 1:
+        if value_insert == 1:
             obj_matrix[0] = value
-        if value_x == 2:
+        if value_insert == 2:
             obj_matrix[1] = value
-        if value_x == 3:
+        if value_insert == 3:
             obj_matrix[2] = value
-        if value_x == 4:
+        if value_insert == 4:
             obj_matrix2[0] = value
-        if value_x == 5:
+        if value_insert == 5:
             obj_matrix2[1] = value
-        if value_x == 6:
+        if value_insert == 6:
             obj_matrix2[2] = value
-        if value_x == 7:
+        if value_insert == 7:
             obj_matrix3[0] = value
-        if value_x == 8:
+        if value_insert == 8:
             obj_matrix3[1] = value
-        if value_x == 9:
+        if value_insert == 9:
             obj_matrix3[2] = value
 
 
-class IlyaPlayerUsual(Player):
+
+class AutoPlayer(Player):
+
+
     def turn(self, matrix, value):
-        value_o = int(input("Введите позицию вставки:"))
-        if value_o < 10:
-            Game.not_enter_matrix.append(value_o)
-        else:
-            print("Такого поля нету...")
-            self.turn(matrix, value)
-        obj_matrix = matrix[0]
-        obj_matrix2 = matrix[1]
-        obj_matrix3 = matrix[2]
 
-        if value_o == 1:
-            obj_matrix[0] = value
-        if value_o == 2:
-            obj_matrix[1] = value
-        if value_o == 3:
-            obj_matrix[2] = value
-        if value_o == 4:
-            obj_matrix2[0] = value
-        if value_o == 5:
-            obj_matrix2[1] = value
-        if value_o == 6:
-            obj_matrix2[2] = value
-        if value_o == 7:
-            obj_matrix3[0] = value
-        if value_o == 8:
-            obj_matrix3[1] = value
-        if value_o == 9:
-            obj_matrix3[2] = value
-
-
-class AutoPlayer1(Player):
-    def turn(self, matrix, value):
         obj_matrix = matrix[0]
         obj_matrix2 = matrix[1]
         obj_matrix3 = matrix[2]
@@ -257,5 +227,5 @@ class AutoPlayer1(Player):
                 return True
 
 
-game = Game(TimurPlayerUsual(), IlyaPlayerUsual())
+game = Game(HandPlayer(), AutoPlayer())
 print(game.start_game())
