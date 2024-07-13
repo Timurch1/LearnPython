@@ -1,15 +1,6 @@
 from random import randint
 
 
-def convert_symbol(value):
-    if value == 1:
-        return "X"
-    elif value == -1:
-        return "O"
-    else:
-        return "-"
-
-
 class Game:
     matrix = [[0, 0, 0],
               [0, 0, 0],
