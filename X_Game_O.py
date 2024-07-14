@@ -1,11 +1,11 @@
 from random import randint
+import players
 
 
 class Game:
     matrix = [[0, 0, 0],
               [0, 0, 0],
               [0, 0, 0]]
-    not_enter_matrix = []
 
     def __init__(self, first_player, second_player):
         self.first_player = first_player
@@ -47,13 +47,8 @@ class Game:
         else:
             return "-"
 
-    def isintanse(self):
-        return isinstance(self.first_player, AutoPlayer) or isinstance(self.second_player, AutoPlayer)
-
-
     def start_game(self, player_winner1=False, player_winner2=False):
-        if self.isintanse():
-            print("Каждое поле в Крестики-Нолики соотвествует цифре:"'\n'
+        print("Каждое поле в Крестики-Нолики соотвествует цифре:"'\n'
               "                [1]  [2]  [3]"'\n'
               "                [4]  [5]  [6]"'\n'
               "                [7]  [8]  [9]")
@@ -73,8 +68,6 @@ class Game:
                 self.first_player.turn(self.matrix, 1)
                 player_winner1 = self.chek_is_winner(1)
                 random_move_player -= 1
-                if self.isintanse():
-                    print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 self.print_info()
                 print()
 
@@ -83,8 +76,6 @@ class Game:
                 self.second_player.turn(self.matrix, -1)
                 player_winner2 = self.chek_is_winner(-1)
                 random_move_player += 1
-                if self.isintanse():
-                   print(f'Недостуные поля для хода: {self.not_enter_matrix}')
                 self.print_info()
                 print()
 
@@ -96,136 +87,5 @@ class Game:
             return f'Ничья!'
 
 
-class Player:
-
-    def turn(self, matrix, value):
-        raise NameError('Походу неправильно указали имя в дочернем классе, советую перепроверить.')
-
-
-class HandPlayer(Player):
-    def turn(self, matrix, value):
-        value_insert = int(input("Введите позицию вставки:"))
-        if value_insert < 10:
-            Game.not_enter_matrix.append(value_insert)
-        else:
-            print("Такого поля нету...")
-            self.turn(matrix, value)
-        obj_matrix = matrix[0]
-        obj_matrix2 = matrix[1]
-        obj_matrix3 = matrix[2]
-
-        if value_insert == 1:
-            obj_matrix[0] = value
-        if value_insert == 2:
-            obj_matrix[1] = value
-        if value_insert == 3:
-            obj_matrix[2] = value
-        if value_insert == 4:
-            obj_matrix2[0] = value
-        if value_insert == 5:
-            obj_matrix2[1] = value
-        if value_insert == 6:
-            obj_matrix2[2] = value
-        if value_insert == 7:
-            obj_matrix3[0] = value
-        if value_insert == 8:
-            obj_matrix3[1] = value
-        if value_insert == 9:
-            obj_matrix3[2] = value
-
-
-
-class AutoPlayer(Player):
-
-
-    def turn(self, matrix, value):
-
-        obj_matrix = matrix[0]
-        obj_matrix2 = matrix[1]
-        obj_matrix3 = matrix[2]
-
-        if obj_matrix[0] == value and obj_matrix[1] == value:
-            obj_matrix[2] = value
-            return True
-        elif obj_matrix[2] == value and obj_matrix[1] == value:
-            obj_matrix[0] = value
-            return True
-        elif obj_matrix2[0] == value and obj_matrix2[1] == value:
-            obj_matrix2[2] = value
-            return True
-        elif obj_matrix2[2] == value and obj_matrix2[1] == value:
-            obj_matrix2[0] = value
-            return True
-        elif obj_matrix3[0] == value and obj_matrix3[1] == value:
-            obj_matrix3[2] = value
-            return True
-        elif obj_matrix3[2] == value and obj_matrix3[1] == value:
-            obj_matrix3[0] = value
-            return True
-
-        elif obj_matrix[0] == value and obj_matrix2[0] == value:
-            obj_matrix3[0] = value
-            return True
-        elif obj_matrix3[0] == value and obj_matrix2[0] == value:
-            obj_matrix[0] = value
-            return True
-        elif obj_matrix[1] == value and obj_matrix2[1] == value:
-            obj_matrix3[1] = value
-            return True
-        elif obj_matrix3[1] == value and obj_matrix2[1] == value:
-            obj_matrix[1] = value
-            return True
-        elif obj_matrix[2] == value and obj_matrix2[2] == value:
-            obj_matrix3[2] = value
-            return True
-        elif obj_matrix3[2] == value and obj_matrix2[2] == value:
-            obj_matrix[2] = value
-            return True
-
-        elif obj_matrix[0] == value and obj_matrix2[1] == value:
-            obj_matrix3[2] = value
-            return True
-        elif obj_matrix3[2] == value and obj_matrix2[1] == value:
-            obj_matrix[0] = value
-            return True
-        elif obj_matrix[2] == value and obj_matrix2[1] == value:
-            obj_matrix3[0] = value
-            return True
-        elif obj_matrix3[0] == value and obj_matrix2[1] == value:
-            obj_matrix[2] = value
-            return True
-        else:
-            if obj_matrix2[1] != -1:
-                obj_matrix2[1] = value
-                return True
-            if obj_matrix3[0] != -1:
-                obj_matrix3[0] = value
-                return True
-            if obj_matrix[0] != -1:
-                obj_matrix[0] = value
-                return True
-            if obj_matrix2[0] != -1:
-                obj_matrix2[0] = value
-                return True
-            if obj_matrix[1] != -1:
-                obj_matrix[1] = value
-                return True
-            if obj_matrix[2] != -1:
-                obj_matrix[2] = value
-                return True
-            if obj_matrix2[2] != -1:
-                obj_matrix2[2] = value
-                return True
-            if obj_matrix3[1] != -1:
-                obj_matrix3[1] = value
-                return True
-            if obj_matrix3[2] != -1:
-                obj_matrix3[2] = value
-                return True
-            if obj_matrix2[2] != -1:
-                obj_matrix2[2] = value
-                return True
-
-
-game = Game(HandPlayer(), AutoPlayer())
+game = Game(players.HandPlayer(), players.HandPlayer())
 print(game.start_game())
