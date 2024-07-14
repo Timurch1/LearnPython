@@ -6,6 +6,7 @@ class Game:
     matrix = [[0, 0, 0],
               [0, 0, 0],
               [0, 0, 0]]
+    not_enter_matrix = []
 
     def __init__(self, first_player, second_player):
         self.first_player = first_player
