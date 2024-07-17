@@ -146,3 +146,37 @@ def time(it_time, n) -> int:
     return person
 result = time(2, 3)
 print(result)
+
+# Минимальная длина подмассива в сумме дающая target
+
+def AnySum(lst: int, target: int) -> list:
+    lst2 = []
+    if target not in lst:
+
+           for x in range(len(lst)):
+               for i in range(x, len(lst)):
+                   if lst[x] + lst[i] == target:
+                       lst2.append(lst[x])
+                       lst2.append(lst[i])
+                       return f'list - {lst2}, len - {len(lst2)}'
+
+           count = 0
+
+           for a in range(len(lst)):
+
+               count += lst[a]
+               miss_num = target - count
+               lst2.append(lst[a])
+
+               for b in range(a, len(lst)):
+
+                   if lst[b] == miss_num:
+                       lst2.append(miss_num)
+                       return f'list - {lst2}, len - {len(lst2)}'
+           return 0
+    else:
+        lst2.append(target)
+        return f'len - {lst2}, list - {lst2}'
+
+res = AnySum([1, 1, 1, 1, 1], 5)
+print(res)
